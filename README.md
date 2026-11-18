@@ -19,6 +19,8 @@ Run `npm run build`, then `npm start` to listen on `127.0.0.1:3000`. No product 
 
 Internal research, architecture, roadmap and implementation tickets are maintained outside this Git checkout. They are not included in the public repository or hosted CI. Ask the maintainer for authorized team access; do not upload copies to issues, pull requests or CI artifacts.
 
+See [API runtime conventions](apps/api/README.md) for owned schemas, error codes, limits and safe telemetry.
+
 ## Participation
 
 - [Contributing](CONTRIBUTING.md)
