@@ -2,8 +2,10 @@
 
 ## Unreleased
 
+- Added the minimal NestJS/Express workspace, strict build and lint checks, framework boundary tests and loopback startup.
+
 - Added a minimal repository/tooling foundation and public contributor/governance guidance.
-- Selected NestJS/TypeScript for the future backend; no application runtime is implemented.
+- Selected NestJS/TypeScript with the default Express adapter.
 - Kept team research, architecture and implementation tickets outside the Git checkout; public checks require no private files.
 - Added synthetic fixture specifications for the future OpenAPI/manual-dependency workflow.
 

@@ -2,7 +2,7 @@
 
 API Archaeologist is an early-stage project for explaining potential API consumer impact using traceable evidence. Missing usage information must never be treated as proof that an API change is safe.
 
-Current implementation: repository tooling and synthetic fixtures only. There is no application server, UI, database migration or published release yet. NestJS with TypeScript has been selected for the backend; implementation has not started.
+Current implementation: a minimal NestJS/Express server, framework-free error classification, repository tooling and synthetic fixtures. There are no analysis endpoints, UI, database migrations or published releases.
 
 ## Contributor setup
 
@@ -13,7 +13,9 @@ npm ci --ignore-scripts
 npm run check
 ```
 
-`npm run format` formats repository files. `npm run docs:check` checks public local links and JSON syntax and rejects internal planning paths if tracked. `npm test` tests that tooling. These commands work on a public clone without team-only documents. Application build, database and end-to-end tests will be introduced with the corresponding implementation.
+`npm run format` formats repository files. `npm run docs:check` checks public local links and JSON syntax and rejects internal planning paths if tracked. `npm run check` also runs lint, strict TypeScript checks, production builds, and runtime/boundary tests. These commands work on a public clone without team-only documents. Database and product end-to-end tests will be introduced with their implementation.
+
+Run `npm run build`, then `npm start` to listen on `127.0.0.1:3000`. No product routes exist yet; unknown paths return 404. Stop with Ctrl+C. Startup errors exit unsuccessfully without printing exception contents. Run `npm test` after building. Workspace builds run domain → application → API; only the API enables decorator metadata.
 
 Internal research, architecture, roadmap and implementation tickets are maintained outside this Git checkout. They are not included in the public repository or hosted CI. Ask the maintainer for authorized team access; do not upload copies to issues, pull requests or CI artifacts.
 

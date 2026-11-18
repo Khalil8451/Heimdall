@@ -11,14 +11,30 @@
     "npm": "11.19.0"
   },
   "scripts": {
-    "check": "npm run format:check && npm run docs:check && npm run scripts:check && npm test",
+    "check": "npm run format:check && npm run docs:check && npm run scripts:check && npm run lint && npm run typecheck && npm run build && npm test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "docs:check": "node scripts/check-docs.mjs",
     "scripts:check": "node --check scripts/check-docs.mjs && node --check scripts/check-docs.test.mjs",
-    "test": "node --test scripts/check-docs.test.mjs"
+    "test": "node --test scripts/*.test.mjs",
+    "build": "npm run build -w @heimdall/domain && npm run build -w @heimdall/application && npm run build -w @heimdall/api",
+    "typecheck": "npm run build -w @heimdall/domain && npm run build -w @heimdall/application && npm run typecheck --workspaces --if-present",
+    "lint": "eslint apps packages --no-error-on-unmatched-pattern",
+    "start": "npm run start --workspace @heimdall/api"
   },
   "devDependencies": {
-    "prettier": "3.10.1"
-  }
+    "@nestjs/testing": "12.5.1",
+    "@types/express": "5.0.6",
+    "@types/node": "24.10.1",
+    "eslint": "10.15.0",
+    "prettier": "3.10.1",
+    "supertest": "7.3.2",
+    "typescript": "6.0.3",
+    "@babel/eslint-parser": "8.1.2",
+    "@babel/core": "8.1.2"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

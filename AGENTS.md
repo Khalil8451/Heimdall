@@ -2,7 +2,7 @@
 
 ## Scope and private planning
 
-Current phase: tooling foundation; no product runtime exists. Backend selection: NestJS with TypeScript and the default Express adapter. Do not implement features merely because tickets exist.
+Current phase: initial Nest runtime foundation; no product analysis features exist. Backend selection: NestJS with TypeScript and the default Express adapter. Do not implement features merely because tickets exist.
 
 Team-only plans live outside this checkout at `../docs` (on this machine: `C:/Users/Med Khalil Guesmi/Desktop/Heimdall/docs`). For authorized implementation work, read its `project-status.md`, `implementation-plan.md`, `adr/README.md` and assigned ticket first. If unavailable, use public repository guidance and request the relevant authorized context; do not fetch private plans from unapproved services. Public CI must never require that directory.
 
@@ -18,7 +18,7 @@ Never copy internal research, architecture, roadmap or tickets into this checkou
 
 ## Commands and done criteria
 
-Node 24.21.0, npm 11.19.0. Use `npm ci --ignore-scripts`, `npm run format`, then `npm run check`. `npm test` covers tooling only. No app/dev/build/migration scripts exist yet.
+Node 24.21.0, npm 11.19.0. Use `npm ci --ignore-scripts`, `npm run format`, then `npm run check`. `npm run check` includes lint, typecheck, build and tooling/runtime tests. Build before running `npm test` separately. `npm start` runs the API on loopback; no database migration scripts exist yet.
 
 Implement the assigned acceptance criteria, run relevant positive/negative tests, review security, update the appropriate public or private documentation, and report actual results and limitations. Future persistence work needs real DB and crash/retry tests. Never weaken assertions to fit a failure or claim unrun checks.
 
