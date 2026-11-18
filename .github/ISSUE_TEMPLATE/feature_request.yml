@@ -1,0 +1,16 @@
+name: Workflow or feature proposal
+description: Describe a real API-change workflow and the evidence available
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem, user, and current workaround
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and acceptance criteria
+      description: What artifacts exist, what is unknown, and how would we verify success?
+    validations:
+      required: true

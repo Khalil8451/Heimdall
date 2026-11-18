@@ -1,0 +1,43 @@
+{
+  "edgeDirection": "consumer-to-provider",
+  "cases": [
+    {
+      "name": "chain",
+      "edges": [
+        ["web", "orders"],
+        ["orders", "users"]
+      ],
+      "changedProvider": "users",
+      "reachableConsumers": ["orders", "web"]
+    },
+    {
+      "name": "diamond",
+      "edges": [
+        ["web", "orders"],
+        ["web", "billing"],
+        ["orders", "users"],
+        ["billing", "users"]
+      ],
+      "changedProvider": "users",
+      "reachableConsumers": ["billing", "orders", "web"]
+    },
+    {
+      "name": "self-cycle",
+      "edges": [["users", "users"]],
+      "changedProvider": "users",
+      "reachableConsumers": ["users"]
+    },
+    {
+      "name": "cycle",
+      "edges": [
+        ["a", "b"],
+        ["b", "c"],
+        ["c", "a"]
+      ],
+      "changedProvider": "a",
+      "reachableConsumers": ["a", "b", "c"]
+    }
+  ],
+  "transitiveImpactMustRemain": "potential",
+  "note": "Reachability oracle only; no traversal implementation exists."
+}

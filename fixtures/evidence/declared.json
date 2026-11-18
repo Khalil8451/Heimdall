@@ -1,0 +1,34 @@
+{
+  "fixtureFormatVersion": 1,
+  "status": "illustrative-not-an-implemented-api-contract",
+  "api": "synthetic-users",
+  "providerVersionFixture": "openapi/base.json",
+  "declarations": [
+    {
+      "consumer": "billing-ui",
+      "consumerRevision": "1111111111111111111111111111111111111111",
+      "sourceKind": "manual",
+      "sourceLocator": "synthetic:billing-ui/dependencies.json",
+      "method": "GET",
+      "path": "/users/{id}",
+      "direction": "response",
+      "status": "200",
+      "mediaType": "application/json",
+      "propertyPath": ["user", "name"],
+      "testIds": ["billing-ui:user-name-render"]
+    },
+    {
+      "consumer": "profile-summary",
+      "consumerRevision": "2222222222222222222222222222222222222222",
+      "sourceKind": "manual",
+      "sourceLocator": "synthetic:profile-summary/dependencies.json",
+      "method": "GET",
+      "path": "/users/{id}",
+      "direction": "response",
+      "status": "200",
+      "mediaType": "application/json",
+      "propertyPath": ["user", "id"],
+      "testIds": []
+    }
+  ]
+}
