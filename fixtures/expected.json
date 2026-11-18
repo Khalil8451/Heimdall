@@ -1,0 +1,22 @@
+{
+  "status": "design-oracle-not-executed",
+  "removedRequiredResponseField": {
+    "compatibility": "breaking",
+    "basePointer": "/paths/~1users~1{id}/get/responses/200/content/application~1json/schema/properties/user/properties/name",
+    "consumer": "billing-ui",
+    "dependency": "declared",
+    "impact": "potential",
+    "confirmedIncompatibility": false,
+    "suggestedTestIds": ["billing-ui:user-name-render"]
+  },
+  "unrelatedDeclaredConsumer": {
+    "consumer": "profile-summary",
+    "matchedRemovedField": false,
+    "globalSafetyClaimAllowed": false
+  },
+  "withoutDeclarations": {
+    "compatibility": "breaking",
+    "consumerCoverage": "unknown",
+    "globalSafetyClaimAllowed": false
+  }
+}

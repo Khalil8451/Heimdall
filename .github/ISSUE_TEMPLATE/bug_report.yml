@@ -1,0 +1,20 @@
+name: Bug report
+description: Report a reproducible tooling or implemented-feature problem
+body:
+  - type: markdown
+    attributes:
+      value: Use synthetic data only. Report vulnerabilities through SECURITY.md, not this form.
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction and expected behavior
+      description: Include the smallest input and exact command; distinguish actual from planned features.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and sanitized output
+      description: Commit, OS, Node/npm versions, and relevant output without credentials or private specs.
+    validations:
+      required: true

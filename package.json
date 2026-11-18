@@ -1,0 +1,24 @@
+{
+  "name": "api-archaeologist",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Evidence-backed API impact analysis: design and tooling foundation",
+  "type": "module",
+  "license": "SEE LICENSE IN LICENSE",
+  "packageManager": "npm@11.19.0",
+  "engines": {
+    "node": "24.21.0",
+    "npm": "11.19.0"
+  },
+  "scripts": {
+    "check": "npm run format:check && npm run docs:check && npm run scripts:check && npm test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "docs:check": "node scripts/check-docs.mjs",
+    "scripts:check": "node --check scripts/check-docs.mjs && node --check scripts/check-docs.test.mjs",
+    "test": "node --test scripts/check-docs.test.mjs"
+  },
+  "devDependencies": {
+    "prettier": "3.10.1"
+  }
+}
