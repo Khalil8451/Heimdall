@@ -41,6 +41,8 @@ test('framework boundaries reject Nest, persistence and adapter imports in eithe
       '@nestjs/common',
       'express',
       'pg',
+      'typeorm',
+      'mongoose',
       '@heimdall/adapters',
       '../../apps/api/src/bootstrap.js',
     ]) {

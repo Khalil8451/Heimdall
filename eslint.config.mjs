@@ -37,6 +37,11 @@ export default [
         {
           patterns: [
             {
+              regex: '^(?!node:|[.]{1,2}/|@heimdall/domain$)',
+              message:
+                'Application imports only domain, the standard library and local modules.',
+            },
+            {
               group: [
                 '@nestjs/*',
                 'express',
