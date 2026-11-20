@@ -1,3 +1,5 @@
+import request from 'supertest';
+import { createApplication } from '../apps/api/dist/bootstrap.js';
 import assert from 'node:assert/strict';
 import { test, before, after } from 'node:test';
 import { randomUUID } from 'node:crypto';
@@ -261,4 +263,72 @@ test('Compose binds only loopback and named-volume data survives container resta
     ).rows[0].count,
     1,
   );
+});
+
+test('readiness checks real migration compatibility and recovers after a database outage', async () => {
+  const url = new URL(base);
+  url.username = 'heimdall_runtime';
+  url.password = passwords.runtime;
+  const app = await createApplication({
+    DATABASE_URL: url.href,
+    DB_STATEMENT_MS: '50',
+    DB_CONNECT_MS: '100',
+  });
+  let paused = false;
+  try {
+    await app.listen(0, '127.0.0.1');
+    // The extra fixture migration correctly makes this application version unready.
+    assert.equal(
+      (await request(app.getHttpServer()).get('/health/ready')).status,
+      503,
+    );
+    await migrator.query(
+      'DELETE FROM app.schema_migrations WHERE version=$1',
+      [2],
+    );
+    assert.equal(
+      (await request(app.getHttpServer()).get('/health/ready')).status,
+      200,
+    );
+    const checksum = (
+      await migrator.query(
+        'SELECT checksum FROM app.schema_migrations WHERE version=1',
+      )
+    ).rows[0].checksum;
+    await migrator.query(
+      'UPDATE app.schema_migrations SET checksum=$1 WHERE version=1',
+      ['drift'],
+    );
+    assert.equal(
+      (await request(app.getHttpServer()).get('/health/ready')).status,
+      503,
+    );
+    await migrator.query(
+      'UPDATE app.schema_migrations SET checksum=$1 WHERE version=1',
+      [checksum],
+    );
+    docker(['pause', name]);
+    paused = true;
+    assert.equal(
+      (await request(app.getHttpServer()).get('/health/live')).status,
+      200,
+    );
+    const started = performance.now();
+    assert.equal(
+      (await request(app.getHttpServer()).get('/health/ready')).status,
+      503,
+    );
+    assert.ok(performance.now() - started < 2500);
+    docker(['unpause', name]);
+    paused = false;
+    for (let i = 0; ; i++) {
+      const ready = await request(app.getHttpServer()).get('/health/ready');
+      if (ready.status === 200) break;
+      if (i >= 20) assert.fail('readiness did not recover');
+      await delay(100);
+    }
+  } finally {
+    if (paused) docker(['unpause', name]);
+    await app.close();
+  }
 });

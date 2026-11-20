@@ -1,3 +1,4 @@
+import { readdir, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import pg from 'pg';
 import type { PoolClient, PoolConfig } from 'pg';
@@ -123,4 +124,24 @@ export async function initializeRoles(
     );
     await client.query('GRANT USAGE ON SCHEMA app TO heimdall_runtime');
   });
+}
+
+export async function loadMigrations(): Promise<Migration[]> {
+  const folder = new URL('../migrations/', import.meta.url);
+  const files = (await readdir(folder, { withFileTypes: true })).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
+  return Promise.all(
+    files.map(async (file) => {
+      if (!file.isFile() || !/^\d{3}-[a-z0-9-]+\.sql$/.test(file.name))
+        throw new Error('INVALID_MIGRATION_FILE');
+      return {
+        version: Number(file.name.slice(0, 3)),
+        sql: (await readFile(new URL(file.name, folder), 'utf8')).replaceAll(
+          '\r\n',
+          '\n',
+        ),
+      };
+    }),
+  );
 }
