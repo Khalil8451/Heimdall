@@ -17,10 +17,13 @@
     "docs:check": "node scripts/check-docs.mjs",
     "scripts:check": "node --check scripts/check-docs.mjs && node --check scripts/check-docs.test.mjs",
     "test": "node --test scripts/*.test.mjs",
-    "build": "npm run build -w @heimdall/domain && npm run build -w @heimdall/application && npm run build -w @heimdall/api",
+    "build": "npm run build -w @heimdall/domain && npm run build -w @heimdall/application && npm run build -w @heimdall/api && npm run build -w @heimdall/adapters",
     "typecheck": "npm run build -w @heimdall/domain && npm run build -w @heimdall/application && npm run typecheck --workspaces --if-present",
     "lint": "eslint apps packages --no-error-on-unmatched-pattern",
-    "start": "npm run start --workspace @heimdall/api"
+    "start": "npm run start --workspace @heimdall/api",
+    "db:setup": "node --env-file=.env scripts/database.mjs setup",
+    "db:migrate": "node --env-file=.env scripts/database.mjs migrate",
+    "test:db": "node --test scripts/database.integration.mjs"
   },
   "devDependencies": {
     "@nestjs/testing": "12.5.1",

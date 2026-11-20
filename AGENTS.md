@@ -18,7 +18,7 @@ Never copy internal research, architecture, roadmap or tickets into this checkou
 
 ## Commands and done criteria
 
-Node 24.21.0, npm 11.19.0. Use `npm ci --ignore-scripts`, `npm run format`, then `npm run check`. `npm run check` includes lint, typecheck, build and tooling/runtime tests. Build before running `npm test` separately. `npm start` runs the API on loopback; no database migration scripts exist yet.
+Node 24.21.0, npm 11.19.0. Use `npm ci --ignore-scripts`, `npm run format`, then `npm run check`. `npm run check` includes lint, typecheck, build and tooling/runtime tests. Build before running `npm test` separately. `npm start` runs the API on loopback; database setup/migration commands require explicit local credentials. Run `npm run test:db` for real PostgreSQL checks.
 
 Implement the assigned acceptance criteria, run relevant positive/negative tests, review security, update the appropriate public or private documentation, and report actual results and limitations. Future persistence work needs real DB and crash/retry tests. Never weaken assertions to fit a failure or claim unrun checks.
 
