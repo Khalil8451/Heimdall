@@ -13,3 +13,5 @@ Keep domain policy independent of HTTP/framework/persistence concerns. Future Ne
 Only synthetic or authorized public fixtures belong here. Internal documentation copies under root docs/tickets/internal-docs are ignored and rejected by the tracked-path check; never force-add them. A clean public clone must pass without private files.
 
 Follow [SECURITY.md](SECURITY.md) for vulnerabilities and the [code of conduct](CODE_OF_CONDUCT.md). The existing license is unchanged; owner confirmation of final licensing policy remains pending. No contributor rights-transfer mechanism is introduced.
+
+CI runs the local check command on Linux and Windows, real PostgreSQL tests on Linux, dependency audit/review, and CodeQL. Security actions use immutable commits and read-only tokens. CodeQL results stay on the disposable runner; a local SARIF gate fails on high security severity (7 or above), error-level findings, or incomplete output. No SARIF, database, source artifact or private planning document is uploaded by these workflows. Dependency license policy remains an owner decision; vulnerability checks stay enabled.
