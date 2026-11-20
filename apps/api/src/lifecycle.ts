@@ -5,6 +5,13 @@ export function termination(app: NestExpressApplication, deadlineMs: number) {
     if (closing) return;
     closing = true;
     console.info('SHUTDOWN_STARTED');
+    // Requests that finish during shutdown can leave keep-alive sockets idle.
+    // Reap those sockets while allowing active responses to finish normally.
+    const idle = setInterval(
+      () => app.getHttpServer().closeIdleConnections(),
+      25,
+    );
+    idle.unref();
     const deadline = setTimeout(() => {
       console.error('SHUTDOWN_TIMEOUT');
       process.exit(1);
@@ -21,6 +28,7 @@ export function termination(app: NestExpressApplication, deadlineMs: number) {
       })
       .finally(() => {
         clearTimeout(deadline);
+        clearInterval(idle);
         dispose();
       });
   };
