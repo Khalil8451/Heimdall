@@ -6,7 +6,10 @@ import request from 'supertest';
 import { createApplication } from '../apps/api/dist/bootstrap.js';
 import { LISTEN_OPTIONS } from '../apps/api/dist/app.module.js';
 test('application bootstraps, binds loopback defaults, responds to HTTP and closes', async () => {
-  const app = await createApplication();
+  const app = await createApplication({
+    DATABASE_URL:
+      'postgresql://heimdall_runtime:synthetic-password@127.0.0.1:1/heimdall',
+  });
   try {
     assert.deepEqual(app.get(LISTEN_OPTIONS), {
       host: '127.0.0.1',

@@ -1,26 +1,13 @@
-import { readdir, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
-import { createPool, initializeRoles, migrate } from '@heimdall/adapters';
-export async function readMigrations() {
-  const folder = new URL('../packages/adapters/migrations/', import.meta.url);
-  const files = (await readdir(folder, { withFileTypes: true })).sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
-  return Promise.all(
-    files.map(async (file) => {
-      if (!file.isFile() || !/^\d{3}-[a-z0-9-]+\.sql$/.test(file.name))
-        throw new Error('INVALID_MIGRATION_FILE');
-      return {
-        version: Number(file.name.slice(0, 3)),
-        sql: (await readFile(new URL(file.name, folder), 'utf8')).replaceAll(
-          '\r\n',
-          '\n',
-        ),
-      };
-    }),
-  );
-}
+import {
+  createPool,
+  initializeRoles,
+  migrate,
+  loadMigrations,
+} from '@heimdall/adapters';
+export const readMigrations = loadMigrations;
+
 if (
   process.argv[1] &&
   resolve(process.argv[1]) === fileURLToPath(import.meta.url)

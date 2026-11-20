@@ -1,16 +1,21 @@
 import { createApplication } from './bootstrap.js';
-import { LISTEN_OPTIONS } from './app.module.js';
+import { configuration } from './configuration.js';
+import { termination } from './lifecycle.js';
 try {
+  const config = configuration(process.env);
+  console.info(
+    'CONFIG_VALIDATED: HOST PORT DATABASE_URL DB_STATEMENT_MS DB_CONNECT_MS SHUTDOWN_MS',
+  );
   const app = await createApplication();
-  const options = app.get<{ host: string; port: number }>(LISTEN_OPTIONS);
   try {
-    await app.listen(options.port, options.host);
+    await app.listen(config.port, config.host);
   } catch (error) {
     await app.close();
     throw error;
   }
-  console.info('API listening on http://127.0.0.1:3000');
+  termination(app, config.shutdownMs);
+  console.info('API_LISTENING');
 } catch {
-  console.error('API startup failed');
+  console.error('API_STARTUP_FAILED');
   process.exitCode = 1;
 }

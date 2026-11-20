@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added validated local configuration, truthful liveness/readiness and bounded signal-driven shutdown.
+
 - Added pinned local PostgreSQL infrastructure, restricted roles, checksum-verified transactional migrations and real database integration tests.
 
 - Added the minimal NestJS/Express workspace, strict build and lint checks, framework boundary tests and loopback startup.

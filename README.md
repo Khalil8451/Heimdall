@@ -15,7 +15,7 @@ npm run check
 
 `npm run format` formats repository files. `npm run docs:check` checks public local links and JSON syntax and rejects internal planning paths if tracked. `npm run check` also runs lint, strict TypeScript checks, production builds, and runtime/boundary tests. These commands work on a public clone without team-only documents. `npm run test:db` separately runs real PostgreSQL integration tests using Docker; hosted CI includes that job. Product end-to-end tests will be introduced with analysis features.
 
-Run `npm run build`, then `npm start` to listen on `127.0.0.1:3000`. No product routes exist yet; unknown paths return 404. Stop with Ctrl+C. Startup errors exit unsuccessfully without printing exception contents. Run `npm test` after building. Workspace builds run domain → application → API; only the API enables decorator metadata.
+Configure the ignored `.env` file using the database setup instructions, then run `npm run build` and `npm start` to listen on `127.0.0.1:3000`. `GET /health/live` reports process liveness; `GET /health/ready` returns 200 only when PostgreSQL is reachable and migration checksums match. No analysis routes exist yet; unknown paths return 404. Stop with Ctrl+C. Startup errors exit unsuccessfully without printing exception contents. Run `npm test` after building. Workspace builds run domain → application → API; only the API enables decorator metadata.
 
 Internal research, architecture, roadmap and implementation tickets are maintained outside this Git checkout. They are not included in the public repository or hosted CI. Ask the maintainer for authorized team access; do not upload copies to issues, pull requests or CI artifacts.
 
